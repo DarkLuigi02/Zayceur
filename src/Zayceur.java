@@ -6,240 +6,10 @@ public class Zayceur {
 
     String[][] salle;
     int tours;
-    int n;
+    int dimension;
     int nbrinfecte;
-    List<Integer> infecte=new List<Integer>() {
-        @Override
-        public int size() {
-            return 0;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-
-        @Override
-        public boolean contains(Object o) {
-            return false;
-        }
-
-        @Override
-        public Iterator<Integer> iterator() {
-            return null;
-        }
-
-        @Override
-        public Object[] toArray() {
-            return new Object[0];
-        }
-
-        @Override
-        public <T> T[] toArray(T[] a) {
-            return null;
-        }
-
-        @Override
-        public boolean add(Integer integer) {
-            return false;
-        }
-
-        @Override
-        public boolean remove(Object o) {
-            return false;
-        }
-
-        @Override
-        public boolean containsAll(Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean addAll(Collection<? extends Integer> c) {
-            return false;
-        }
-
-        @Override
-        public boolean addAll(int index, Collection<? extends Integer> c) {
-            return false;
-        }
-
-        @Override
-        public boolean removeAll(Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean retainAll(Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public void clear() {
-
-        }
-
-        @Override
-        public Integer get(int index) {
-            return null;
-        }
-
-        @Override
-        public Integer set(int index, Integer element) {
-            return null;
-        }
-
-        @Override
-        public void add(int index, Integer element) {
-
-        }
-
-        @Override
-        public Integer remove(int index) {
-            return null;
-        }
-
-        @Override
-        public int indexOf(Object o) {
-            return 0;
-        }
-
-        @Override
-        public int lastIndexOf(Object o) {
-            return 0;
-        }
-
-        @Override
-        public ListIterator<Integer> listIterator() {
-            return null;
-        }
-
-        @Override
-        public ListIterator<Integer> listIterator(int index) {
-            return null;
-        }
-
-        @Override
-        public List<Integer> subList(int fromIndex, int toIndex) {
-            return null;
-        }
-    };
-    List<int[]> ints = new List<int[]>() {
-        @Override
-        public int size() {
-            return 0;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-
-        @Override
-        public boolean contains(Object o) {
-            return false;
-        }
-
-        @Override
-        public Iterator<int[]> iterator() {
-            return null;
-        }
-
-        @Override
-        public Object[] toArray() {
-            return new Object[0];
-        }
-
-        @Override
-        public <T> T[] toArray(T[] a) {
-            return null;
-        }
-
-        @Override
-        public boolean add(int[] ints) {
-            return false;
-        }
-
-        @Override
-        public boolean remove(Object o) {
-            return false;
-        }
-
-        @Override
-        public boolean containsAll(Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean addAll(Collection<? extends int[]> c) {
-            return false;
-        }
-
-        @Override
-        public boolean addAll(int index, Collection<? extends int[]> c) {
-            return false;
-        }
-
-        @Override
-        public boolean removeAll(Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public boolean retainAll(Collection<?> c) {
-            return false;
-        }
-
-        @Override
-        public void clear() {
-
-        }
-
-        @Override
-        public int[] get(int index) {
-            return new int[0];
-        }
-
-        @Override
-        public int[] set(int index, int[] element) {
-            return new int[0];
-        }
-
-        @Override
-        public void add(int index, int[] element) {
-
-        }
-
-        @Override
-        public int[] remove(int index) {
-            return new int[0];
-        }
-
-        @Override
-        public int indexOf(Object o) {
-            return 0;
-        }
-
-        @Override
-        public int lastIndexOf(Object o) {
-            return 0;
-        }
-
-        @Override
-        public ListIterator<int[]> listIterator() {
-            return null;
-        }
-
-        @Override
-        public ListIterator<int[]> listIterator(int index) {
-            return null;
-        }
-
-        @Override
-        public List<int[]> subList(int fromIndex, int toIndex) {
-            return null;
-        }
-    };
+    List<Integer> infecte=new ArrayList<Integer>();
+    List<int[]> ints = new ArrayList<int[]>();
 
         public void init(){//initialise l'application
             tours =0;
@@ -248,12 +18,12 @@ public class Zayceur {
             ints.clear();
             System.out.println("Initialiser le plateau");
             System.out.println("Saisir la dimension du plateau");
-            n=Fonction.saisirInt();
-            while (n<3){
+            dimension=Fonction.saisirInt();
+            while (dimension<3){
                 System.out.println("le plateau n'est pas valide");
-                n=Fonction.saisirInt();
+                dimension=Fonction.saisirInt();
             }
-            salle = new String[n][n];
+            salle = new String[dimension][dimension];
             for (int i=0; i<salle.length;i++){
                 for (int j=0; j<salle.length;j++){
                         salle[i][j]="'";
@@ -262,9 +32,8 @@ public class Zayceur {
         }
 
         public void initCoordonnées(){ //Code Principal
-            int y = 0,x=0;
+            int y,x;
             boolean debut=false;
-            boolean fin=false;
             init();
             System.out.println("Saisisez La Position du/des patient 0");
             sortirPlateau(this.salle);
@@ -283,6 +52,11 @@ public class Zayceur {
                 sortirPlateau(salle);
                 debut=stop();
             }
+            infection();
+        }
+
+        public void infection(){
+            boolean fin=false;
             System.out.println("Etape 0");
             sortirPlateau(this.salle);
             infecte.add(nbrinfecte);
@@ -357,7 +131,6 @@ public class Zayceur {
                     assigner(plateau,x,y-1);
                 }
                 else{
-                    System.out.println("h");
                     assigner(plateau,x,y-1);
                     assigner(plateau,x,y+1);
                     assigner(plateau,x-1,y);
@@ -371,11 +144,16 @@ public class Zayceur {
         }
 
         public void générationSuivante(String[][] plateau){ //permet de passez d'une etape a une autre //fonction restant a modifiée
-            String [][] temp = plateau;
+            String[][] temp = new String[dimension][dimension];
             for (int i=0;i<plateau.length;i++){
                 for (int j=0;j<plateau.length;j++){
+                    temp[i][j]=plateau[i][j];
+                }
+            }
+            for (int i=0;i<temp.length;i++){
+                for (int j=0;j<temp.length;j++){
                     if (temp[i][j].equals("*")){
-                        voisin(plateau,i,j);// tous ce qui est infèrieux est modifièe
+                        voisin(plateau,i,j);
                         ints.add(new int[]{i, j});
                         nbrinfecte++;
                     }
